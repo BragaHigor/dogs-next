@@ -1,13 +1,22 @@
-import photosGet from "@/actions/photos-get";
+import React from "react";
+
+import { Metadata } from "next";
 import Feed from "@/components/Feed/feed";
+import photosGet from "@/actions/photos-get";
+import userGet from "@/actions/user-get";
 import Link from "next/link";
 
-export default async function Home() {
-   const { data } = await photosGet();
+export const metadata: Metadata = {
+   title: "Minha Conta",
+};
+
+export default async function ContaPage() {
+   const { data: user } = await userGet();
+   const { data } = await photosGet({ user: user?.username });
    return (
-      <section className="container mainContainer">
+      <main>
          {data?.length ? (
-            <Feed photos={data} />
+            <Feed photos={data} user={user?.username} />
          ) : (
             <div>
                <p
@@ -17,7 +26,7 @@ export default async function Home() {
                      marginBottom: "1rem",
                   }}
                >
-                  Nem uma foto encontrada.
+                  Nenhuma foto encontrada.
                </p>
                <Link
                   href={"/conta/postar"}
@@ -28,6 +37,6 @@ export default async function Home() {
                </Link>
             </div>
          )}
-      </section>
+      </main>
    );
 }
