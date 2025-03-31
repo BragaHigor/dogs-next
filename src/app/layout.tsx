@@ -5,6 +5,7 @@ import Header from "@/components/Header/header";
 import FooterPage from "@/components/Footer/footer";
 import { UserContextProvider } from "@/context/user-context";
 import userGet from "@/actions/user-get";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
    title: "DOGS NEXT",
@@ -31,6 +32,7 @@ export default async function RootLayout({
                   <FooterPage />
                </div>
             </UserContextProvider>
+            <SpeedInsights />
          </body>
       </html>
    );
